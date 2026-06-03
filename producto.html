@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greenpoint — Producto</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">
+        <svg class="logo-svg" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="20" fill="#16a34a"/>
+          <text x="20" y="27" text-anchor="middle" font-size="22" fill="white">♻</text>
+        </svg>
+        <span>Greenpoint</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="producto.html" class="active">Producto</a></li>
+        <li><a href="nosotros.html">Sobre Nosotros</a></li>
+      </ul>
+      <a href="nosotros.html" class="btn btn-primary nav-cta">Sobre nosotros</a>
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Inicio</a>
+      <a href="producto.html" class="active">Producto</a>
+      <a href="nosotros.html">Sobre Nosotros</a>
+      <a href="nosotros.html" class="btn btn-primary">Sobre nosotros</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-label">Nuestro servicio</span>
+      <h1>La plataforma que conecta<br/><span class="highlight">vecinos con puntos verdes</span></h1>
+      <p>Una herramienta digital gratuita que localiza, en segundos, el centro de acopio más cercano a tu ubicación en Córdoba ciudad.</p>
+    </div>
+  </section>
+
+  <!-- DESCRIPCIÓN PRINCIPAL -->
+  <section class="section">
+    <div class="container">
+      <div class="product-feature">
+        <div class="product-feature-text">
+          <span class="section-label">¿Qué es?</span>
+          <h2>Un buscador de puntos de reciclaje geolocalizado</h2>
+          <p>Greenpoint es una plataforma web 100% gratuita. El usuario ingresa su dirección o activa su GPS, selecciona el tipo de material que quiere reciclar, y en segundos ve en un mapa los centros de acopio más cercanos con toda la información necesaria.</p>
+          <ul class="feature-list">
+            <li>📍 Localización por dirección o GPS</li>
+            <li>🗂️ Filtro por tipo de material reciclable</li>
+            <li>🕐 Horarios actualizados de cada punto</li>
+            <li>🗺️ Mapa interactivo con ruta de llegada</li>
+            <li>📱 Compatible con cualquier celular sin instalar nada</li>
+          </ul>
+        </div>
+        <div class="product-feature-visual">
+          <div class="screen-mockup">
+            <div class="screen-bar">
+              <span class="screen-dot"></span>
+              <span class="screen-dot"></span>
+              <span class="screen-dot"></span>
+              <span class="screen-url">greenpoint.org.ar</span>
+            </div>
+            <div class="screen-body">
+              <div class="screen-search">
+                <span>📍</span>
+                <span class="screen-input-text">Av. Colón 1200, Córdoba</span>
+                <span class="screen-btn">Buscar</span>
+              </div>
+              <div class="screen-map-area">
+                <div class="smap-pin sp1">♻</div>
+                <div class="smap-pin sp2 sp-active">♻</div>
+                <div class="smap-pin sp3">♻</div>
+              </div>
+              <div class="screen-result">
+                <div class="sr-left">
+                  <strong>EcoVerde Nueva Córdoba</strong>
+                  <span>Av. Vélez Sársfield 248</span>
+                </div>
+                <div class="sr-right">
+                  <span class="sr-dist">320 m</span>
+                  <span class="sr-open">Abierto</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOTOS / GALERÍA -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">El servicio en acción</span>
+        <h2>Así funciona Greenpoint</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-card gc-big">
+          <div class="gallery-visual gv-map">
+            <div class="gv-map-bg">
+              <div class="gv-pin gv-p1">♻</div>
+              <div class="gv-pin gv-p2">♻</div>
+              <div class="gv-pin gv-p3 gv-active">♻</div>
+              <div class="gv-pin gv-p4">♻</div>
+              <div class="gv-card-overlay">
+                <strong>EcoVerde Palermo</strong>
+                <span>320 m · Abre 8-20 h</span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-caption">
+            <h3>Mapa interactivo de Córdoba</h3>
+            <p>Visualizá todos los puntos de reciclaje en el mapa. Cada pin muestra la distancia, horarios y materiales aceptados.</p>
+          </div>
+        </div>
+        <div class="gallery-card gc-small">
+          <div class="gallery-visual gv-filter">
+            <div class="gv-filter-title">¿Qué querés reciclar?</div>
+            <div class="gv-chips">
+              <span class="gv-chip active">🧴 Plástico</span>
+              <span class="gv-chip">🍾 Vidrio</span>
+              <span class="gv-chip active">📄 Papel</span>
+              <span class="gv-chip">🥫 Metal</span>
+              <span class="gv-chip">💻 Electrónicos</span>
+              <span class="gv-chip active">🛢️ Aceite</span>
+            </div>
+          </div>
+          <div class="gallery-caption">
+            <h3>Filtro por material</h3>
+            <p>Seleccioná el tipo de residuo y el mapa se actualiza mostrando solo los puntos que lo aceptan.</p>
+          </div>
+        </div>
+        <div class="gallery-card gc-small">
+          <div class="gallery-visual gv-detail">
+            <div class="gv-detail-header">
+              <div class="gv-detail-icon">♻</div>
+              <div>
+                <strong>Centro de Acopio Alberdi</strong>
+                <span>Bv. San Juan 540, Córdoba</span>
+              </div>
+            </div>
+            <div class="gv-detail-info">
+              <div class="gv-info-row"><span>🕐</span><span>Lun–Vie: 8:00–20:00</span></div>
+              <div class="gv-info-row"><span>🕐</span><span>Sáb: 9:00–14:00</span></div>
+              <div class="gv-info-row"><span>📞</span><span>(0351) 450-1234</span></div>
+            </div>
+            <div class="gv-detail-tags">
+              <span>Plástico</span><span>Vidrio</span><span>Papel</span><span>Metal</span>
+            </div>
+          </div>
+          <div class="gallery-caption">
+            <h3>Ficha completa del punto</h3>
+            <p>Cada centro muestra horarios, contacto, dirección exacta y qué materiales acepta.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO FUNCIONA -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Simple y rápido</span>
+        <h2>Tres pasos para reciclar bien</h2>
+      </div>
+      <div class="steps-row">
+        <div class="step-item">
+          <div class="step-num">01</div>
+          <div class="step-emoji">📍</div>
+          <h3>Ingresá tu ubicación</h3>
+          <p>Escribí tu dirección o permitinos acceder a tu ubicación automáticamente desde el celular.</p>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-item">
+          <div class="step-num">02</div>
+          <div class="step-emoji">🗂️</div>
+          <h3>Elegí el material</h3>
+          <p>Seleccioná qué tipo de residuo querés reciclar: plástico, vidrio, papel, electrónicos y más.</p>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-item">
+          <div class="step-num">03</div>
+          <div class="step-emoji">🗺️</div>
+          <h3>Encontrá el punto</h3>
+          <p>Ves en el mapa el centro más cercano con toda la info para llegar y qué llevar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATERIALES -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">¿Qué podés reciclar?</span>
+        <h2>Materiales aceptados en la red</h2>
+        <p>Greenpoint cubre todos los tipos de residuos reciclables más comunes en Córdoba.</p>
+      </div>
+      <div class="materials-grid">
+        <div class="mat-card"><span>🧴</span><strong>Plástico</strong><p>Botellas PET, envases, bolsas</p></div>
+        <div class="mat-card"><span>🍾</span><strong>Vidrio</strong><p>Botellas, frascos, envases</p></div>
+        <div class="mat-card"><span>📄</span><strong>Papel y Cartón</strong><p>Diarios, revistas, cajas</p></div>
+        <div class="mat-card"><span>🥫</span><strong>Metal y Latas</strong><p>Aluminio, latas, chatarra</p></div>
+        <div class="mat-card"><span>💻</span><strong>Electrónicos</strong><p>Celulares, computadoras, pilas</p></div>
+        <div class="mat-card"><span>🍃</span><strong>Orgánico</strong><p>Residuos de cocina y jardín</p></div>
+        <div class="mat-card"><span>🛢️</span><strong>Aceite usado</strong><p>Aceite de cocina y motor</p></div>
+        <div class="mat-card"><span>👕</span><strong>Textil</strong><p>Ropa, calzado, telas</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALOR AGREGADO -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">¿Por qué Greenpoint?</span>
+        <h2>El valor que ofrecemos</h2>
+      </div>
+      <div class="value-grid">
+        <div class="value-card">
+          <div class="value-num">01</div>
+          <h3>Gratuito y sin registro</h3>
+          <p>No hace falta crear una cuenta ni pagar nada. Entrás, buscás y listo.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-num">02</div>
+          <h3>Información verificada</h3>
+          <p>El equipo de operaciones verifica cada punto. No vas a encontrar datos desactualizados.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-num">03</div>
+          <h3>Impacto real en Córdoba</h3>
+          <p>Cada reciclaje evitado del relleno sanitario es una contribución concreta al ambiente de la ciudad.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-num">04</div>
+          <h3>Comunidad activa</h3>
+          <p>Los vecinos pueden reportar nuevos puntos y actualizar información, mejorando la plataforma entre todos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo footer-logo">
+          <svg class="logo-svg" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="20" fill="#16a34a"/>
+            <text x="20" y="27" text-anchor="middle" font-size="22" fill="white">♻</text>
+          </svg>
+          <span>Greenpoint</span>
+        </a>
+        <p>Facilitamos el reciclaje para todos los cordobeses.</p>
+      </div>
+      <div class="footer-nav">
+        <a href="index.html">Inicio</a>
+        <a href="producto.html">Producto</a>
+        <a href="nosotros.html">Sobre Nosotros</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Greenpoint · ONG sin fines de lucro · Córdoba, Argentina</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
