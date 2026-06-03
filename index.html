@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greenpoint — Reciclá más fácil</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-icon">♻</span>
+        <span>Greenpoint</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#como-funciona">Cómo funciona</a></li>
+        <li><a href="#beneficios">Beneficios</a></li>
+        <li><a href="#materiales">Materiales</a></li>
+      </ul>
+      <a href="#buscar" class="btn btn-primary nav-cta">Encontrar punto</a>
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#beneficios">Beneficios</a>
+      <a href="#materiales">Materiales</a>
+      <a href="#buscar" class="btn btn-primary">Encontrar punto</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="buscar">
+    <div class="hero-bg"></div>
+    <div class="container hero-inner">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        +2.400 puntos de reciclaje en Argentina
+      </div>
+      <h1 class="hero-title">
+        Encontrá el punto de reciclaje
+        <span class="highlight">más cercano a vos</span>
+      </h1>
+      <p class="hero-subtitle">
+        Ingresá tu dirección o usá tu ubicación y te mostramos al instante dónde podés llevar tus residuos reciclables.
+      </p>
+      <div class="search-box">
+        <div class="search-input-wrap">
+          <span class="search-icon">📍</span>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Ej: Av. Corrientes 1500, Buenos Aires"
+            class="search-input"
+          />
+        </div>
+        <button class="btn btn-primary btn-lg" id="searchBtn">Buscar</button>
+        <button class="btn btn-outline btn-lg" id="locationBtn">
+          <span>🎯</span> Usar mi ubicación
+        </button>
+      </div>
+      <p class="search-hint" id="searchHint"></p>
+      <div class="hero-stats">
+        <div class="stat">
+          <strong>2.400+</strong>
+          <span>Puntos registrados</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <strong>24</strong>
+          <span>Provincias</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <strong>15</strong>
+          <span>Tipos de material</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="map-mockup">
+        <div class="map-pin pin-1">♻</div>
+        <div class="map-pin pin-2">♻</div>
+        <div class="map-pin pin-3 pin-active">♻</div>
+        <div class="map-pin pin-4">♻</div>
+        <div class="map-card">
+          <strong>EcoVerde Palermo</strong>
+          <span>320 m · Abre hoy 8–20 h</span>
+          <div class="map-tags">
+            <span class="tag">Plástico</span>
+            <span class="tag">Vidrio</span>
+            <span class="tag">Papel</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO FUNCIONA -->
+  <section class="section" id="como-funciona">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Simple y rápido</span>
+        <h2>Cómo funciona Greenpoint</h2>
+        <p>Tres pasos y ya sabés dónde reciclar.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-number">01</div>
+          <div class="step-icon">📍</div>
+          <h3>Ingresá tu ubicación</h3>
+          <p>Escribí tu dirección o permitinos acceder a tu ubicación automáticamente.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-number">02</div>
+          <div class="step-icon">🗂️</div>
+          <h3>Filtrá por material</h3>
+          <p>Elegí qué tipo de residuo querés reciclar: plástico, vidrio, papel, electrónicos y más.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-number">03</div>
+          <div class="step-icon">🗺️</div>
+          <h3>Encontrá el punto</h3>
+          <p>Te mostramos el mapa con los puntos más cercanos, horarios y qué aceptan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS -->
+  <section class="section section-alt" id="beneficios">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Por qué Greenpoint</span>
+        <h2>Reciclar nunca fue tan fácil</h2>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">⚡</div>
+          <h3>Resultados al instante</h3>
+          <p>Sin registro, sin apps. Buscás y en segundos tenés el punto más cercano.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">🔄</div>
+          <h3>Datos actualizados</h3>
+          <p>La base de datos se actualiza constantemente con nuevos puntos y horarios.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">🗺️</div>
+          <h3>Mapa interactivo</h3>
+          <p>Visualizá todos los puntos en el mapa y elegí el que más te convenga.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">📱</div>
+          <h3>100% mobile-friendly</h3>
+          <p>Funciona perfecto desde el celular, sin necesidad de instalar nada.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">🌿</div>
+          <h3>Impacto real</h3>
+          <p>Cada residuo que reciclás reduce la basura que va al relleno sanitario.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">🤝</div>
+          <h3>Comunidad</h3>
+          <p>Sumá nuevos puntos y ayudá a otros a reciclar mejor en tu barrio.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATERIALES -->
+  <section class="section" id="materiales">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Qué podés reciclar</span>
+        <h2>Materiales aceptados</h2>
+        <p>Encontramos puntos para todos los tipos de residuo reciclable.</p>
+      </div>
+      <div class="materials-grid">
+        <div class="material-card" data-material="plastico">
+          <span class="material-emoji">🧴</span>
+          <span>Plástico</span>
+        </div>
+        <div class="material-card" data-material="vidrio">
+          <span class="material-emoji">🍾</span>
+          <span>Vidrio</span>
+        </div>
+        <div class="material-card" data-material="papel">
+          <span class="material-emoji">📄</span>
+          <span>Papel y Cartón</span>
+        </div>
+        <div class="material-card" data-material="metal">
+          <span class="material-emoji">🥫</span>
+          <span>Metal y Latas</span>
+        </div>
+        <div class="material-card" data-material="electronicos">
+          <span class="material-emoji">💻</span>
+          <span>Electrónicos</span>
+        </div>
+        <div class="material-card" data-material="organico">
+          <span class="material-emoji">🍃</span>
+          <span>Residuos orgánicos</span>
+        </div>
+        <div class="material-card" data-material="aceite">
+          <span class="material-emoji">🛢️</span>
+          <span>Aceite usado</span>
+        </div>
+        <div class="material-card" data-material="textil">
+          <span class="material-emoji">👕</span>
+          <span>Textil</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="section cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <div class="cta-leaf cta-leaf-1">🍃</div>
+        <div class="cta-leaf cta-leaf-2">🌿</div>
+        <h2>Empezá a reciclar hoy</h2>
+        <p>Cada pequeña acción suma. Encontrá tu punto de reciclaje ahora.</p>
+        <a href="#buscar" class="btn btn-white btn-lg">Buscar punto cercano</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <span class="logo-icon">♻</span>
+          <span>Greenpoint</span>
+        </a>
+        <p>Facilitamos el reciclaje para todos.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Producto</h4>
+          <a href="#como-funciona">Cómo funciona</a>
+          <a href="#materiales">Materiales</a>
+          <a href="#buscar">Buscar punto</a>
+        </div>
+        <div class="footer-col">
+          <h4>Comunidad</h4>
+          <a href="#">Agregar punto</a>
+          <a href="#">Reportar error</a>
+          <a href="#">Blog</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Privacidad</a>
+          <a href="#">Términos</a>
+          <a href="#">Contacto</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Greenpoint. Hecho con 💚 para un planeta mejor.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
