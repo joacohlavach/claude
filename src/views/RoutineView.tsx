@@ -34,7 +34,7 @@ export function RoutineView() {
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <p className="text-xs font-bold uppercase tracking-widest text-ash">Tu rutina</p>
+        <p className="font-mono text-[11px] font-medium uppercase tracking-widest text-dim">Tu rutina</p>
         {editingName ? (
           <input
             autoFocus
@@ -42,11 +42,11 @@ export function RoutineView() {
             onChange={(e) => setNameDraft(e.target.value)}
             onBlur={commitName}
             onKeyDown={(e) => e.key === 'Enter' && commitName()}
-            className="clay-pressed mt-1 w-full rounded-lg px-2 py-1 text-2xl font-extrabold text-ash-light outline-none"
+            className="panel-2 mt-1 w-full rounded-lg px-2 py-1 text-2xl font-bold text-ink-light outline-none"
           />
         ) : (
           <h1
-            className="mt-0.5 text-2xl font-extrabold tracking-tight text-ash-light"
+            className="mt-0.5 text-2xl font-bold tracking-tight text-ink-light"
             onClick={() => setEditingName(true)}
           >
             {routineName}
@@ -67,7 +67,7 @@ export function RoutineView() {
 
       <button
         onClick={() => addDay(`Día ${sortedDays.length + 1}`)}
-        className="clay tap-scale flex items-center justify-center gap-2 rounded-3xl py-4 text-sm font-extrabold text-ember-light"
+        className="panel tap-scale flex items-center justify-center gap-2 rounded-2xl py-4 text-sm font-bold text-orange-light"
       >
         <Plus size={17} /> Agregar día
       </button>

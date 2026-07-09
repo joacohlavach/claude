@@ -11,8 +11,13 @@ interface GymState {
 
   setRoutineName: (name: string) => void
 
-  addExercise: (nombre: string, tren: TrenBloque | null, categoria: CategoryId | null) => Exercise
-  updateExercise: (id: string, patch: Partial<Pick<Exercise, 'nombre' | 'tren' | 'categoria'>>) => void
+  addExercise: (
+    nombre: string,
+    tren: TrenBloque | null,
+    categoria: CategoryId | null,
+    imagen?: string | null,
+  ) => Exercise
+  updateExercise: (id: string, patch: Partial<Pick<Exercise, 'nombre' | 'tren' | 'categoria' | 'imagen'>>) => void
   deleteExercise: (id: string) => void
 
   addDay: (titulo: string) => void
@@ -38,8 +43,8 @@ export const useStore = create<GymState>()(
 
       setRoutineName: (name) => set({ routineName: name }),
 
-      addExercise: (nombre, tren, categoria) => {
-        const exercise: Exercise = { id: uuid(), nombre, tren, categoria, origen: 'custom' }
+      addExercise: (nombre, tren, categoria, imagen = null) => {
+        const exercise: Exercise = { id: uuid(), nombre, tren, categoria, origen: 'custom', imagen }
         set((s) => ({ exercises: [...s.exercises, exercise] }))
         return exercise
       },

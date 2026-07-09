@@ -15,6 +15,7 @@ export interface Exercise {
   tren: TrenBloque | null
   categoria: CategoryId | null
   origen: 'seed' | 'custom'
+  imagen?: string | null
 }
 
 export interface DayExerciseEntry {

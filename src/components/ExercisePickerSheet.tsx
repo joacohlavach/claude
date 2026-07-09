@@ -43,19 +43,19 @@ export function ExercisePickerSheet({
     <>
       <Sheet open={open && !formOpen} title="Agregar ejercicio" onClose={onClose}>
         <div className="flex flex-col gap-3 pb-2">
-          <div className="clay flex items-center gap-2 rounded-xl px-3.5 py-2.5">
-            <Search size={16} className="text-ash" />
+          <div className="panel-2 flex items-center gap-2 rounded-xl px-3.5 py-2.5">
+            <Search size={16} className="text-dim" />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Buscar en tu catálogo..."
-              className="w-full bg-transparent text-sm text-ash-light outline-none placeholder:text-ash/50"
+              className="w-full bg-transparent text-sm text-ink-light outline-none placeholder:text-dim"
             />
           </div>
 
           <button
             onClick={() => setFormOpen(true)}
-            className="clay tap-scale flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm font-bold text-ember-light"
+            className="panel-2 tap-scale flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm font-bold text-orange-light"
           >
             <Plus size={16} /> Crear ejercicio nuevo
           </button>
@@ -65,15 +65,21 @@ export function ExercisePickerSheet({
               <button
                 key={e.id}
                 onClick={() => handlePick(e)}
-                className="clay tap-scale flex items-center gap-3 rounded-xl px-3.5 py-3 text-left"
+                className="panel-2 tap-scale flex items-center gap-3 rounded-xl px-3.5 py-3 text-left"
               >
-                <CategoryDot categoria={e.categoria} size={9} />
-                <span className="flex-1 text-sm text-ash-light">{e.nombre}</span>
-                {e.tren && <span className="text-[10px] font-bold text-ash">{trenLabels[e.tren]}</span>}
+                {e.imagen ? (
+                  <img src={e.imagen} alt="" className="h-8 w-8 shrink-0 rounded-lg object-cover" />
+                ) : (
+                  <CategoryDot categoria={e.categoria} size={9} />
+                )}
+                <span className="flex-1 text-sm text-ink-light">{e.nombre}</span>
+                {e.tren && (
+                  <span className="font-mono text-[10px] font-medium text-dim">{trenLabels[e.tren]}</span>
+                )}
               </button>
             ))}
             {filtered.length === 0 && (
-              <p className="py-6 text-center text-sm text-ash">No hay ejercicios que coincidan.</p>
+              <p className="py-6 text-center text-sm text-dim">No hay ejercicios que coincidan.</p>
             )}
           </div>
         </div>

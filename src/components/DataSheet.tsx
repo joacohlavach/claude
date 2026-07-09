@@ -46,27 +46,27 @@ export function DataSheet({ open, onClose }: { open: boolean; onClose: () => voi
   return (
     <Sheet open={open} title="Ajustes y datos" onClose={onClose}>
       <div className="flex flex-col gap-3 pb-2">
-        <p className="text-sm text-ash">
+        <p className="text-sm text-dim">
           Todo se guarda en este dispositivo. Hacé una copia de seguridad para no perder tu rutina.
         </p>
 
-        <button onClick={handleExport} className="clay tap-scale flex items-center gap-3 rounded-2xl px-4 py-3.5 text-left">
-          <span className="clay-ember flex h-9 w-9 items-center justify-center rounded-full text-white">
+        <button onClick={handleExport} className="panel-2 tap-scale flex items-center gap-3 rounded-xl px-4 py-3.5 text-left">
+          <span className="accent-fill flex h-9 w-9 items-center justify-center rounded-full">
             <Download size={16} />
           </span>
           <span>
-            <span className="block text-sm font-bold text-ash-light">Exportar backup</span>
-            <span className="block text-xs text-ash">Descarga un .json con toda tu rutina</span>
+            <span className="block text-sm font-bold text-ink-light">Exportar backup</span>
+            <span className="block text-xs text-dim">Descarga un .json con toda tu rutina</span>
           </span>
         </button>
 
-        <button onClick={handleImportClick} className="clay tap-scale flex items-center gap-3 rounded-2xl px-4 py-3.5 text-left">
-          <span className="clay flex h-9 w-9 items-center justify-center rounded-full text-ash-light">
+        <button onClick={handleImportClick} className="panel-2 tap-scale flex items-center gap-3 rounded-xl px-4 py-3.5 text-left">
+          <span className="panel flex h-9 w-9 items-center justify-center rounded-full text-ink-light">
             <Upload size={16} />
           </span>
           <span>
-            <span className="block text-sm font-bold text-ash-light">Importar backup</span>
-            <span className="block text-xs text-ash">Reemplaza los datos actuales por un .json</span>
+            <span className="block text-sm font-bold text-ink-light">Importar backup</span>
+            <span className="block text-xs text-dim">Reemplaza los datos actuales por un .json</span>
           </span>
         </button>
         <input
@@ -77,17 +77,17 @@ export function DataSheet({ open, onClose }: { open: boolean; onClose: () => voi
           onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
         />
 
-        <button onClick={handleReset} className="clay tap-scale flex items-center gap-3 rounded-2xl px-4 py-3.5 text-left">
-          <span className="clay flex h-9 w-9 items-center justify-center rounded-full text-blaze">
+        <button onClick={handleReset} className="panel-2 tap-scale flex items-center gap-3 rounded-xl px-4 py-3.5 text-left">
+          <span className="panel flex h-9 w-9 items-center justify-center rounded-full text-red">
             <RotateCcw size={16} />
           </span>
           <span>
-            <span className="block text-sm font-bold text-ash-light">Restaurar original</span>
-            <span className="block text-xs text-ash">Vuelve a la rutina que subiste al principio</span>
+            <span className="block text-sm font-bold text-ink-light">Restaurar original</span>
+            <span className="block text-xs text-dim">Vuelve a la rutina que subiste al principio</span>
           </span>
         </button>
 
-        {message && <p className="text-center text-xs text-ember-light">{message}</p>}
+        {message && <p className="text-center text-xs text-orange-light">{message}</p>}
       </div>
     </Sheet>
   )

@@ -9,7 +9,7 @@ const tabs: { id: View; label: string; icon: typeof ClipboardList }[] = [
 export function FloatingNav({ active, onChange }: { active: View; onChange: (v: View) => void }) {
   return (
     <nav
-      className="glass fixed inset-x-6 bottom-0 z-30 mb-4 flex items-center justify-around rounded-3xl p-1.5"
+      className="panel fixed inset-x-4 bottom-0 z-30 mb-4 flex items-center gap-1.5 rounded-2xl p-1.5"
       style={{ marginBottom: 'calc(env(safe-area-inset-bottom, 0px) + 16px)' }}
     >
       {tabs.map((tab) => {
@@ -19,12 +19,12 @@ export function FloatingNav({ active, onChange }: { active: View; onChange: (v: 
           <button
             key={tab.id}
             onClick={() => onChange(tab.id)}
-            className={`tap-scale relative flex flex-1 flex-col items-center gap-1 rounded-2xl py-2.5 transition-colors ${
-              isActive ? 'clay-ember text-white' : 'text-ash'
+            className={`tap-scale flex flex-1 flex-col items-center gap-1 rounded-xl py-2.5 ${
+              isActive ? 'accent-fill' : 'text-dim'
             }`}
           >
-            <Icon size={20} strokeWidth={2} />
-            <span className="text-[11px] font-bold">{tab.label}</span>
+            <Icon size={19} strokeWidth={2} />
+            <span className="font-mono text-[10.5px] font-medium uppercase tracking-wide">{tab.label}</span>
           </button>
         )
       })}

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronDown, GripVertical, Trash2 } from 'lucide-react'
-import { CategoryDot } from './CategoryDot'
+import { ChevronDown, ImageIcon, Trash2 } from 'lucide-react'
 import { NumberField } from './NumberField'
+import { ImageLightbox } from './ImageLightbox'
 import { useStore } from '../store/useStore'
 import type { DayExerciseEntry, Exercise } from '../types'
 
@@ -16,6 +16,7 @@ export function ExerciseRow({
   dayId: string
 }) {
   const [expanded, setExpanded] = useState(false)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
   const updateDayExercise = useStore((s) => s.updateDayExercise)
   const removeDayExercise = useStore((s) => s.removeDayExercise)
 
@@ -26,21 +27,38 @@ export function ExerciseRow({
     .filter(Boolean)
     .join(' · ')
 
+  const toggle = () => setExpanded((v) => !v)
+
   return (
-    <div className="clay rounded-2xl px-3.5 py-3">
-      <button className="flex w-full items-center gap-3 text-left" onClick={() => setExpanded((v) => !v)}>
-        <GripVertical size={14} className="shrink-0 text-ash/40" />
-        <CategoryDot categoria={exercise?.categoria ?? null} size={10} />
-        <span className="flex-1 min-w-0">
-          <span className="block truncate text-sm font-semibold text-ash-light">
+    <div className="panel-2 rounded-xl px-3.5 py-3">
+      <div
+        role="button"
+        tabIndex={0}
+        className="flex w-full items-center gap-3 text-left"
+        onClick={toggle}
+        onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && toggle()}
+      >
+        {exercise?.imagen ? (
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              setLightboxOpen(true)
+            }}
+            className="tap-scale shrink-0"
+          >
+            <img src={exercise.imagen} alt="" className="h-9 w-9 rounded-lg object-cover" />
+          </button>
+        ) : null}
+        <span className="min-w-0 flex-1">
+          <span className="block truncate text-sm font-medium text-ink-light">
             {exercise?.nombre ?? 'Ejercicio eliminado'}
           </span>
-          {summary && <span className="block text-[11px] text-ash">{summary}</span>}
+          {summary && <span className="block font-mono text-[11px] text-dim">{summary}</span>}
         </span>
-        <motion.span animate={{ rotate: expanded ? 180 : 0 }} className="text-ash">
+        <motion.span animate={{ rotate: expanded ? 180 : 0 }} className="shrink-0 text-dim">
           <ChevronDown size={16} />
         </motion.span>
-      </button>
+      </div>
 
       {expanded && (
         <motion.div
@@ -48,7 +66,17 @@ export function ExerciseRow({
           animate={{ height: 'auto', opacity: 1 }}
           className="overflow-hidden"
         >
-          <div className="mt-3 flex items-center gap-2">
+          {exercise?.imagen && (
+            <button onClick={() => setLightboxOpen(true)} className="tap-scale mt-3 block w-full overflow-hidden rounded-xl">
+              <img src={exercise.imagen} alt={exercise.nombre} className="max-h-44 w-full object-cover" />
+            </button>
+          )}
+          {!exercise?.imagen && (
+            <p className="mt-3 flex items-center gap-1.5 font-mono text-[11px] text-dim">
+              <ImageIcon size={12} /> sin imagen de referencia — se puede agregar desde el catálogo
+            </p>
+          )}
+          <div className="mt-3 grid grid-cols-[1fr_1fr_1.3fr] gap-2">
             <NumberField
               label="Series"
               value={entry.series}
@@ -72,16 +100,22 @@ export function ExerciseRow({
             onChange={(e) => updateDayExercise(dayId, entry.id, { notas: e.target.value })}
             placeholder="Notas (técnica, sensación, progreso...)"
             rows={2}
-            className="clay-pressed mt-2 w-full resize-none rounded-xl px-3 py-2 text-xs text-ash-light outline-none placeholder:text-ash/50"
+            className="panel mt-2 w-full resize-none rounded-xl px-3 py-2 text-xs text-ink-light outline-none placeholder:text-dim"
           />
           <button
             onClick={() => removeDayExercise(dayId, entry.id)}
-            className="tap-scale mt-2 flex items-center gap-1.5 text-xs font-bold text-blaze"
+            className="tap-scale mt-2 flex items-center gap-1.5 text-xs font-bold text-red"
           >
             <Trash2 size={13} /> Quitar de este día
           </button>
         </motion.div>
       )}
+
+      <ImageLightbox
+        src={lightboxOpen ? exercise?.imagen ?? null : null}
+        alt={exercise?.nombre ?? ''}
+        onClose={() => setLightboxOpen(false)}
+      />
     </div>
   )
 }

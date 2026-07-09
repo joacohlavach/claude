@@ -3,30 +3,27 @@ import { mkdirSync } from 'node:fs'
 
 mkdirSync('public/icons', { recursive: true })
 
-// Geometric "G": ring arc with a right-facing gap + inward bar ending in a small plate dot.
+// Geometric "G": ring arc with a right-facing gap + inward bar.
 const RING = 'M 39.96 16.64 A 13 13 0 1 0 39.96 33.36'
 const BAR = 'M 41 25 L 30 25'
-const PLATE = { cx: 30, cy: 25, r: 3.1 }
 
 function badgeSvg({ size = 64, radius = 0, scale = 1 } = {}) {
   return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#fb923c" />
-        <stop offset="55%" stop-color="#f97316" />
-        <stop offset="100%" stop-color="#b91c1c" />
+        <stop offset="0%" stop-color="#e2895a" />
+        <stop offset="55%" stop-color="#d97a44" />
+        <stop offset="100%" stop-color="#a85128" />
       </linearGradient>
       <linearGradient id="g" gradientUnits="userSpaceOnUse" x1="32" y1="12" x2="32" y2="38">
-        <stop offset="0%" stop-color="#fff7ed" />
-        <stop offset="100%" stop-color="#f4f4f5" />
+        <stop offset="0%" stop-color="#1c1408" />
+        <stop offset="100%" stop-color="#120d05" />
       </linearGradient>
     </defs>
     <rect x="0" y="0" width="64" height="64" rx="${radius}" fill="url(#bg)" />
-    <rect x="0" y="0" width="64" height="20" rx="${radius > 0 ? 16 : 0}" fill="rgba(255,255,255,0.15)" />
     <g transform="translate(32 32) scale(${scale}) translate(-32 -32)">
       <path d="${RING}" fill="none" stroke="url(#g)" stroke-width="6.2" stroke-linecap="round" />
       <path d="${BAR}" fill="none" stroke="url(#g)" stroke-width="6.2" stroke-linecap="round" />
-      <circle cx="${PLATE.cx}" cy="${PLATE.cy}" r="${PLATE.r}" fill="url(#g)" opacity="0.95" />
     </g>
   </svg>`
 }

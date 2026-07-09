@@ -1,6 +1,6 @@
 # GymApp
 
-App personal de rutina de gimnasio. React + Vite + TypeScript + Tailwind v4, estilo glassmorphism + claymorphism, pensada para instalarse como PWA en el iPhone (Agregar a pantalla de inicio).
+App personal de rutina de gimnasio. React + Vite + TypeScript + Tailwind v4, estilo "pizarra de gimnasio" (tipografía Roboto/Roboto Mono, paleta sobria negro/naranja/gris/rojo), pensada para instalarse como PWA en el iPhone (Agregar a pantalla de inicio).
 
 ## Desarrollo
 
@@ -40,6 +40,12 @@ Solo hace falta conectar el repo en Netlify (o arrastrar la carpeta `dist` gener
   - **Restaurar original**: vuelve a la rutina que subiste originalmente (`src/data/seed.ts`).
 
 Recomendación: exportá un backup de vez en cuando, sobre todo antes de reinstalar la PWA o cambiar de teléfono.
+
+## Imagen de referencia por ejercicio
+
+Desde el catálogo (Lista de ejercicios → tocar un ejercicio → Editar) podés cargar una foto propia de cómo se hace el ejercicio. Se comprime automáticamente en el dispositivo (máx. ~900px, JPEG) antes de guardarse en `localStorage`, para no llenar el espacio disponible. La miniatura aparece en el catálogo y en la rutina; tocándola se abre a pantalla completa.
+
+Como todo vive en `localStorage`, evitá cargar decenas de fotos en alta resolución — con el uso normal (una foto por ejercicio) no debería haber problema, pero el espacio de `localStorage` en iOS Safari ronda los 5–10 MB por sitio.
 
 ## Estructura de datos y personalización
 
