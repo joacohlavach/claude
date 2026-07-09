@@ -34,8 +34,8 @@ export function ExerciseLibraryView() {
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <p className="text-xs font-bold uppercase tracking-widest text-ash">Catálogo</p>
-        <h1 className="mt-0.5 text-2xl font-extrabold tracking-tight text-ash-light">Lista de ejercicios</h1>
+        <p className="font-mono text-[11px] font-medium uppercase tracking-widest text-dim">Catálogo</p>
+        <h1 className="mt-0.5 text-2xl font-bold tracking-tight text-ink-light">Lista de ejercicios</h1>
       </div>
 
       <div className="flex gap-2 overflow-x-auto no-scrollbar">
@@ -45,14 +45,14 @@ export function ExerciseLibraryView() {
         <Chip active={tab === 'inferior'} onClick={() => setTab('inferior')}>
           Tren Inferior
         </Chip>
-        <Chip active={tab === 'sin-clasificar'} onClick={() => setTab('sin-clasificar')} activeColor="#a1a1aa">
+        <Chip active={tab === 'sin-clasificar'} onClick={() => setTab('sin-clasificar')} activeColor="#8a8d93">
           Sin clasificar {unclassifiedCount > 0 ? `(${unclassifiedCount})` : ''}
         </Chip>
       </div>
 
       <button
         onClick={() => setCreating(true)}
-        className="clay-ember tap-scale flex items-center justify-center gap-2 rounded-2xl py-3 text-sm font-extrabold text-white"
+        className="accent-fill tap-scale flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold"
       >
         <Plus size={16} /> Nuevo ejercicio
       </button>
@@ -71,7 +71,7 @@ export function ExerciseLibraryView() {
       )}
 
       {visible.length === 0 && (
-        <p className="py-8 text-center text-sm text-ash">No hay ejercicios acá todavía.</p>
+        <p className="py-8 text-center text-sm text-dim">No hay ejercicios acá todavía.</p>
       )}
 
       <ExerciseFormSheet open={editing !== null} onClose={() => setEditing(null)} exercise={editing} />
@@ -98,20 +98,24 @@ function ExerciseGroup({
   if (items.length === 0) return null
   return (
     <section>
-      <h3 className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ash">
+      <h3 className="mb-2 flex items-center gap-2 text-[13px] font-bold text-ink-light">
         <span className="h-2 w-2 rounded-full" style={{ background: color ?? '#52525b' }} />
         {title}
-        <span className="text-ash/50">· {items.length}</span>
+        <span className="font-mono text-[11px] font-normal text-dim">· {items.length}</span>
       </h3>
       <div className="flex flex-col gap-2">
         {items.map((e) => (
           <button
             key={e.id}
             onClick={() => onEdit(e)}
-            className="glass tap-scale flex items-center gap-3 rounded-2xl px-4 py-3 text-left"
+            className="panel tap-scale flex items-center gap-3 rounded-xl px-4 py-3 text-left"
           >
-            <CategoryDot categoria={e.categoria} size={10} />
-            <span className="flex-1 text-sm text-ash-light">{e.nombre}</span>
+            {e.imagen ? (
+              <img src={e.imagen} alt="" className="h-9 w-9 shrink-0 rounded-lg object-cover" />
+            ) : (
+              <CategoryDot categoria={e.categoria} size={10} />
+            )}
+            <span className="flex-1 text-sm text-ink-light">{e.nombre}</span>
           </button>
         ))}
       </div>

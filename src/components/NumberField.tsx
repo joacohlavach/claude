@@ -48,10 +48,10 @@ export function NumberField({ label, value, step = 1, suffix = '', onChange }: N
   }
 
   return (
-    <div className="clay flex min-w-0 flex-col items-center gap-1 rounded-2xl px-1 py-2">
-      <span className="text-[10px] font-bold uppercase tracking-wide text-ash">{label}</span>
+    <div className="panel-2 flex min-w-0 flex-col items-center gap-1 rounded-xl px-1 py-2">
+      <span className="font-mono text-[9.5px] font-medium uppercase tracking-wide text-dim">{label}</span>
       <div className="flex w-full items-center gap-0.5">
-        <button onClick={() => adjust(-step)} className="tap-scale shrink-0 p-1 text-ash-light">
+        <button onClick={() => adjust(-step)} className="tap-scale shrink-0 p-1 text-dim">
           <Minus size={13} />
         </button>
         <input
@@ -67,13 +67,13 @@ export function NumberField({ label, value, step = 1, suffix = '', onChange }: N
             setDraft(formatValue(value))
           }}
           onChange={(e) => handleChange(e.target.value)}
-          className="w-full min-w-0 flex-1 bg-transparent text-center text-sm font-bold text-ash-light outline-none"
+          className="w-full min-w-0 flex-1 bg-transparent text-center font-mono text-sm font-medium text-ink-light outline-none"
         />
-        <button onClick={() => adjust(step)} className="tap-scale shrink-0 p-1 text-ash-light">
+        <button onClick={() => adjust(step)} className="tap-scale shrink-0 p-1 text-dim">
           <Plus size={13} />
         </button>
       </div>
-      {suffix && <span className="text-[9px] text-ash">{suffix}</span>}
+      {suffix && <span className="font-mono text-[9px] text-dim">{suffix}</span>}
     </div>
   )
 }

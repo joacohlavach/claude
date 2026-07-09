@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ChevronDown, ChevronUp, Pencil, Plus, Trash2 } from 'lucide-react'
 import { ExerciseRow } from './ExerciseRow'
 import { useStore } from '../store/useStore'
+import { categoryMap } from '../data/categories'
 import type { RoutineDay } from '../types'
 
 export function DayCard({
@@ -33,10 +34,12 @@ export function DayCard({
   }
 
   return (
-    <section className="glass rounded-3xl p-4">
-      <header className="mb-3 flex items-start justify-between gap-2">
-        <div className="flex-1 min-w-0">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-ember">Día {day.orden}</span>
+    <section className="panel rounded-2xl p-4">
+      <header className="mb-4 flex items-start justify-between gap-2">
+        <div className="flex min-w-0 flex-1 items-baseline gap-3">
+          <span className="shrink-0 font-mono text-2xl font-bold text-orange">
+            {String(day.orden).padStart(2, '0')}
+          </span>
           {editingTitle ? (
             <input
               autoFocus
@@ -44,15 +47,15 @@ export function DayCard({
               onChange={(e) => setTitleDraft(e.target.value)}
               onBlur={commitTitle}
               onKeyDown={(e) => e.key === 'Enter' && commitTitle()}
-              className="clay-pressed mt-1 w-full rounded-lg px-2 py-1 text-base font-bold text-ash-light outline-none"
+              className="panel-2 w-full rounded-lg px-2 py-1 text-[15px] font-medium text-ink-light outline-none"
             />
           ) : (
             <button
-              className="flex w-full min-w-0 items-center gap-1.5 text-left"
+              className="flex min-w-0 flex-1 items-center gap-1.5 text-left"
               onClick={() => setEditingTitle(true)}
             >
-              <h2 className="truncate text-base font-bold text-ash-light">{day.titulo}</h2>
-              <Pencil size={12} className="shrink-0 text-ash/50" />
+              <h2 className="truncate text-[15px] font-medium text-ink-light">{day.titulo}</h2>
+              <Pencil size={12} className="shrink-0 text-dim" />
             </button>
           )}
         </div>
@@ -60,38 +63,45 @@ export function DayCard({
           <button
             disabled={isFirst}
             onClick={() => onMove('up')}
-            className="clay tap-scale flex h-7 w-7 items-center justify-center rounded-full text-ash disabled:opacity-30"
+            className="panel-2 tap-scale flex h-7 w-7 items-center justify-center rounded-full text-dim disabled:opacity-30"
           >
             <ChevronUp size={14} />
           </button>
           <button
             disabled={isLast}
             onClick={() => onMove('down')}
-            className="clay tap-scale flex h-7 w-7 items-center justify-center rounded-full text-ash disabled:opacity-30"
+            className="panel-2 tap-scale flex h-7 w-7 items-center justify-center rounded-full text-dim disabled:opacity-30"
           >
             <ChevronDown size={14} />
           </button>
           <button
             onClick={() => confirm(`¿Eliminar "${day.titulo}"?`) && deleteDay(day.id)}
-            className="clay tap-scale flex h-7 w-7 items-center justify-center rounded-full text-blaze"
+            className="panel-2 tap-scale flex h-7 w-7 items-center justify-center rounded-full text-red"
           >
             <Trash2 size={13} />
           </button>
         </div>
       </header>
 
-      <div className="flex flex-col gap-2">
-        {sortedEntries.map((entry) => (
-          <ExerciseRow key={entry.id} entry={entry} exercise={exerciseById.get(entry.exerciseId)} dayId={day.id} />
-        ))}
+      <div className="rail flex flex-col gap-2">
+        {sortedEntries.map((entry) => {
+          const exercise = exerciseById.get(entry.exerciseId)
+          const dotColor = exercise?.categoria ? categoryMap[exercise.categoria].color : '#4a4a4f'
+          return (
+            <div key={entry.id} className="relative">
+              <span className="rail-dot" style={{ top: 22, color: dotColor }} />
+              <ExerciseRow entry={entry} exercise={exercise} dayId={day.id} />
+            </div>
+          )
+        })}
         {sortedEntries.length === 0 && (
-          <p className="py-3 text-center text-xs text-ash">Todavía no hay ejercicios en este día.</p>
+          <p className="py-3 text-center text-xs text-dim">Todavía no hay ejercicios en este día.</p>
         )}
       </div>
 
       <button
         onClick={onAddExercise}
-        className="clay tap-scale mt-3 flex w-full items-center justify-center gap-1.5 rounded-2xl py-2.5 text-xs font-bold text-ember-light"
+        className="panel-2 tap-scale mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs font-bold text-orange-light"
       >
         <Plus size={15} /> Agregar ejercicio
       </button>
