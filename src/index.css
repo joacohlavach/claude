@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #08080a;
+  --color-surface: #111113;
+  --color-surface-2: #17171a;
+  --color-line: #2a2a2e;
+
+  --color-ember: #f97316;
+  --color-ember-light: #fb923c;
+  --color-blaze: #ef4444;
+  --color-ash: #a1a1aa;
+  --color-ash-light: #d4d4d8;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 12% -10%, rgba(249, 115, 22, 0.22), transparent 45%),
+    radial-gradient(circle at 88% 0%, rgba(239, 68, 68, 0.16), transparent 40%),
+    radial-gradient(circle at 50% 100%, rgba(120, 120, 130, 0.12), transparent 55%),
+    var(--color-ink);
+  color: var(--color-ash-light);
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+* {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+input,
+textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---------- Glassmorphism ---------- */
+.glass {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* ---------- Claymorphism ---------- */
+.clay {
+  background: linear-gradient(155deg, var(--color-surface-2), var(--color-surface));
+  box-shadow:
+    6px 6px 14px rgba(0, 0, 0, 0.55),
+    -4px -4px 10px rgba(255, 255, 255, 0.035),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.clay-pressed {
+  box-shadow:
+    inset 4px 4px 10px rgba(0, 0, 0, 0.55),
+    inset -3px -3px 8px rgba(255, 255, 255, 0.03);
+}
+
+.clay-ember {
+  background: linear-gradient(155deg, var(--color-ember-light), var(--color-ember) 60%, #c2410c);
+  box-shadow:
+    5px 5px 14px rgba(0, 0, 0, 0.5),
+    -3px -3px 10px rgba(255, 138, 61, 0.18),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+.tap-scale {
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.tap-scale:active {
+  transform: scale(0.94);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
