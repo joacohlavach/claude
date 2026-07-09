@@ -48,7 +48,7 @@ export function ExerciseRow({
           animate={{ height: 'auto', opacity: 1 }}
           className="overflow-hidden"
         >
-          <div className="mt-3 flex items-center gap-2">
+          <div className="mt-3 grid grid-cols-[1fr_1fr_1.3fr] gap-2">
             <NumberField
               label="Series"
               value={entry.series}
