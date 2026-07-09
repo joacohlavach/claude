@@ -34,6 +34,7 @@ export function Sheet({ open, title, onClose, children }: SheetProps) {
               <h2 className="text-lg font-bold text-ink-light">{title}</h2>
               <button
                 onClick={onClose}
+                aria-label="Cerrar"
                 className="panel-2 tap-scale flex h-9 w-9 items-center justify-center rounded-full text-ink-light"
               >
                 <X size={18} />

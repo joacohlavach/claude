@@ -6,8 +6,9 @@ export interface Category {
   id: CategoryId
   label: string
   color: string
-  colorSoft: string
 }
+
+export type CardStyle = 'stripe' | 'tint'
 
 export interface Exercise {
   id: string

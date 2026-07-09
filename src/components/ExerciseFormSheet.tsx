@@ -19,6 +19,7 @@ export function ExerciseFormSheet({ open, onClose, exercise, defaultTren, onSave
   const addExercise = useStore((s) => s.addExercise)
   const updateExercise = useStore((s) => s.updateExercise)
   const deleteExercise = useStore((s) => s.deleteExercise)
+  const categoryColors = useStore((s) => s.categoryColors)
 
   const [nombre, setNombre] = useState('')
   const [tren, setTren] = useState<TrenBloque | null>(null)
@@ -144,7 +145,12 @@ export function ExerciseFormSheet({ open, onClose, exercise, defaultTren, onSave
           </label>
           <div className="flex flex-wrap gap-2">
             {categories.map((c) => (
-              <Chip key={c.id} active={categoria === c.id} onClick={() => setCategoria(c.id)} activeColor={c.color}>
+              <Chip
+                key={c.id}
+                active={categoria === c.id}
+                onClick={() => setCategoria(c.id)}
+                activeColor={categoryColors[c.id]}
+              >
                 {c.label}
               </Chip>
             ))}

@@ -1,24 +1,35 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronDown, ImageIcon, Trash2 } from 'lucide-react'
+import { ChevronDown, ChevronUp, ImageIcon, Trash2 } from 'lucide-react'
 import { NumberField } from './NumberField'
 import { ImageLightbox } from './ImageLightbox'
 import { useStore } from '../store/useStore'
+import { hexToRgba } from '../lib/color'
 import type { DayExerciseEntry, Exercise } from '../types'
 
 export function ExerciseRow({
   entry,
   exercise,
   dayId,
+  isFirst,
+  isLast,
+  onMove,
 }: {
   entry: DayExerciseEntry
   exercise: Exercise | undefined
   dayId: string
+  isFirst: boolean
+  isLast: boolean
+  onMove: (direction: 'up' | 'down') => void
 }) {
   const [expanded, setExpanded] = useState(false)
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const updateDayExercise = useStore((s) => s.updateDayExercise)
   const removeDayExercise = useStore((s) => s.removeDayExercise)
+  const categoryColors = useStore((s) => s.categoryColors)
+  const cardStyle = useStore((s) => s.cardStyle)
+
+  const color = exercise?.categoria ? categoryColors[exercise.categoria] : null
 
   const summary = [
     entry.series ? `${entry.series}x${entry.reps ?? '-'}` : null,
@@ -29,8 +40,17 @@ export function ExerciseRow({
 
   const toggle = () => setExpanded((v) => !v)
 
+  const cardStyleProps =
+    color && cardStyle === 'tint' ? { background: hexToRgba(color, 0.16) } : undefined
+
   return (
-    <div className="panel-2 rounded-xl px-3.5 py-3">
+    <div
+      className={`panel-2 relative rounded-xl px-3.5 py-3 ${color && cardStyle === 'stripe' ? 'overflow-hidden' : ''}`}
+      style={cardStyleProps}
+    >
+      {color && cardStyle === 'stripe' && (
+        <span className="absolute inset-y-0 left-0 w-1.5" style={{ background: color }} />
+      )}
       <div
         role="button"
         tabIndex={0}
@@ -55,6 +75,30 @@ export function ExerciseRow({
           </span>
           {summary && <span className="block font-mono text-[11px] text-dim">{summary}</span>}
         </span>
+        <div className="flex shrink-0 items-center gap-0.5">
+          <button
+            disabled={isFirst}
+            onClick={(e) => {
+              e.stopPropagation()
+              onMove('up')
+            }}
+            aria-label="Mover ejercicio arriba"
+            className="tap-scale flex h-6 w-6 items-center justify-center rounded-full text-dim disabled:opacity-25"
+          >
+            <ChevronUp size={13} />
+          </button>
+          <button
+            disabled={isLast}
+            onClick={(e) => {
+              e.stopPropagation()
+              onMove('down')
+            }}
+            aria-label="Mover ejercicio abajo"
+            className="tap-scale flex h-6 w-6 items-center justify-center rounded-full text-dim disabled:opacity-25"
+          >
+            <ChevronDown size={13} />
+          </button>
+        </div>
         <motion.span animate={{ rotate: expanded ? 180 : 0 }} className="shrink-0 text-dim">
           <ChevronDown size={16} />
         </motion.span>
