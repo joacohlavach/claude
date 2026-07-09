@@ -23,20 +23,22 @@ function App() {
     <>
       <AnimatePresence>{showSplash && <Splash key="splash" />}</AnimatePresence>
 
-      <div className="mx-auto min-h-full max-w-md px-4 pb-32 pt-24">
+      <div className="mx-auto min-h-full max-w-md">
         <TopBar onOpenSettings={() => setSettingsOpen(true)} />
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={view}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.22 }}
-          >
-            {view === 'rutina' ? <RoutineView /> : <ExerciseLibraryView />}
-          </motion.div>
-        </AnimatePresence>
+        <div className="px-4 pb-36 pt-5">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={view}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.22 }}
+            >
+              {view === 'rutina' ? <RoutineView /> : <ExerciseLibraryView />}
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         <FloatingNav active={view} onChange={setView} />
         <DataSheet open={settingsOpen} onClose={() => setSettingsOpen(false)} />

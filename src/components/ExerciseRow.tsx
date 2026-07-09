@@ -50,7 +50,7 @@ export function ExerciseRow({
           </button>
         ) : null}
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-sm font-medium text-ink-light">
+          <span className={`block text-sm font-medium text-ink-light ${expanded ? '' : 'truncate'}`}>
             {exercise?.nombre ?? 'Ejercicio eliminado'}
           </span>
           {summary && <span className="block font-mono text-[11px] text-dim">{summary}</span>}

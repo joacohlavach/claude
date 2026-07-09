@@ -1,15 +1,18 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { v4 as uuid } from 'uuid'
-import type { CategoryId, DayExerciseEntry, Exercise, RoutineDay, TrenBloque } from '../types'
+import type { CategoryId, DayExerciseEntry, Exercise, RoutineDay, TrenBloque, WeekProgress } from '../types'
 import { seedDays, seedExercises } from '../data/seed'
+import { getMondayISO } from '../lib/week'
 
 interface GymState {
   exercises: Exercise[]
   days: RoutineDay[]
   routineName: string
+  weekProgress: WeekProgress
 
   setRoutineName: (name: string) => void
+  toggleWeekDay: (index: number) => void
 
   addExercise: (
     nombre: string,
@@ -40,8 +43,20 @@ export const useStore = create<GymState>()(
       exercises: seedExercises,
       days: seedDays,
       routineName: 'Plan 3 días',
+      weekProgress: { weekStart: getMondayISO(new Date()), days: [false, false, false, false, false, false, false] },
 
       setRoutineName: (name) => set({ routineName: name }),
+
+      toggleWeekDay: (index) =>
+        set((s) => {
+          const currentMonday = getMondayISO(new Date())
+          const days =
+            s.weekProgress.weekStart === currentMonday
+              ? [...s.weekProgress.days]
+              : [false, false, false, false, false, false, false]
+          days[index] = !days[index]
+          return { weekProgress: { weekStart: currentMonday, days } }
+        }),
 
       addExercise: (nombre, tren, categoria, imagen = null) => {
         const exercise: Exercise = { id: uuid(), nombre, tren, categoria, origen: 'custom', imagen }

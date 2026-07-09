@@ -35,3 +35,8 @@ export interface RoutineDay {
   orden: number
   ejercicios: DayExerciseEntry[]
 }
+
+export interface WeekProgress {
+  weekStart: string
+  days: boolean[]
+}
