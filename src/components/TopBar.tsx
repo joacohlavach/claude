@@ -4,7 +4,7 @@ import { Logo } from './Logo'
 export function TopBar({ onOpenSettings }: { onOpenSettings: () => void }) {
   return (
     <div
-      className="fixed inset-x-0 top-0 z-30 flex items-center justify-between border-b border-line bg-board px-4 pb-3.5"
+      className="sticky top-0 z-30 flex items-center justify-between border-b border-line bg-board px-4 pb-3.5"
       style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 14px)' }}
     >
       <div className="flex items-center gap-2.5">

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Plus } from 'lucide-react'
 import { DayCard } from '../components/DayCard'
 import { ExercisePickerSheet } from '../components/ExercisePickerSheet'
+import { WeekTracker } from '../components/WeekTracker'
 import { useStore } from '../store/useStore'
 
 export function RoutineView() {
@@ -33,6 +34,8 @@ export function RoutineView() {
 
   return (
     <div className="flex flex-col gap-4">
+      <WeekTracker />
+
       <div>
         <p className="font-mono text-[11px] font-medium uppercase tracking-widest text-dim">Tu rutina</p>
         {editingName ? (
