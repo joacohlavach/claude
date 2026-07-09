@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { ChevronDown, ChevronUp, Pencil, Plus, Trash2 } from 'lucide-react'
 import { ExerciseRow } from './ExerciseRow'
 import { useStore } from '../store/useStore'
-import { categoryMap } from '../data/categories'
 import type { RoutineDay } from '../types'
 
 export function DayCard({
@@ -19,8 +18,10 @@ export function DayCard({
   onAddExercise: () => void
 }) {
   const exercises = useStore((s) => s.exercises)
+  const categoryColors = useStore((s) => s.categoryColors)
   const renameDay = useStore((s) => s.renameDay)
   const deleteDay = useStore((s) => s.deleteDay)
+  const reorderDayExercises = useStore((s) => s.reorderDayExercises)
 
   const [editingTitle, setEditingTitle] = useState(false)
   const [titleDraft, setTitleDraft] = useState(day.titulo)
@@ -31,6 +32,15 @@ export function DayCard({
   const commitTitle = () => {
     renameDay(day.id, titleDraft.trim() || day.titulo)
     setEditingTitle(false)
+  }
+
+  const moveExercise = (entryId: string, direction: 'up' | 'down') => {
+    const ids = sortedEntries.map((e) => e.id)
+    const idx = ids.indexOf(entryId)
+    const swapWith = direction === 'up' ? idx - 1 : idx + 1
+    if (swapWith < 0 || swapWith >= ids.length) return
+    ;[ids[idx], ids[swapWith]] = [ids[swapWith], ids[idx]]
+    reorderDayExercises(day.id, ids)
   }
 
   return (
@@ -84,13 +94,20 @@ export function DayCard({
       </header>
 
       <div className="rail flex flex-col gap-2">
-        {sortedEntries.map((entry) => {
+        {sortedEntries.map((entry, i) => {
           const exercise = exerciseById.get(entry.exerciseId)
-          const dotColor = exercise?.categoria ? categoryMap[exercise.categoria].color : '#4a4a4f'
+          const dotColor = exercise?.categoria ? categoryColors[exercise.categoria] : '#4a4a4f'
           return (
             <div key={entry.id} className="relative">
               <span className="rail-dot" style={{ top: 22, color: dotColor }} />
-              <ExerciseRow entry={entry} exercise={exercise} dayId={day.id} />
+              <ExerciseRow
+                entry={entry}
+                exercise={exercise}
+                dayId={day.id}
+                isFirst={i === 0}
+                isLast={i === sortedEntries.length - 1}
+                onMove={(dir) => moveExercise(entry.id, dir)}
+              />
             </div>
           )
         })}

@@ -5,12 +5,15 @@ import { CategoryDot } from '../components/CategoryDot'
 import { ExerciseFormSheet } from '../components/ExerciseFormSheet'
 import { useStore } from '../store/useStore'
 import { categories } from '../data/categories'
-import type { Exercise, TrenBloque } from '../types'
+import { hexToRgba } from '../lib/color'
+import type { CardStyle, Exercise, TrenBloque } from '../types'
 
 type TabId = TrenBloque | 'sin-clasificar'
 
 export function ExerciseLibraryView() {
   const exercises = useStore((s) => s.exercises)
+  const categoryColors = useStore((s) => s.categoryColors)
+  const cardStyle = useStore((s) => s.cardStyle)
   const [tab, setTab] = useState<TabId>('superior')
   const [editing, setEditing] = useState<Exercise | null>(null)
   const [creating, setCreating] = useState(false)
@@ -58,14 +61,21 @@ export function ExerciseLibraryView() {
       </button>
 
       {tab === 'sin-clasificar' ? (
-        <ExerciseGroup title="Sin clasificar" items={visible} onEdit={setEditing} />
+        <ExerciseGroup title="Sin clasificar" items={visible} onEdit={setEditing} cardStyle={cardStyle} />
       ) : (
         <>
           {groups.byCategory.map(({ cat, items }) => (
-            <ExerciseGroup key={cat.id} title={cat.label} color={cat.color} items={items} onEdit={setEditing} />
+            <ExerciseGroup
+              key={cat.id}
+              title={cat.label}
+              color={categoryColors[cat.id]}
+              items={items}
+              onEdit={setEditing}
+              cardStyle={cardStyle}
+            />
           ))}
           {groups.uncategorized.length > 0 && (
-            <ExerciseGroup title="Sin categoría" items={groups.uncategorized} onEdit={setEditing} />
+            <ExerciseGroup title="Sin categoría" items={groups.uncategorized} onEdit={setEditing} cardStyle={cardStyle} />
           )}
         </>
       )}
@@ -89,11 +99,13 @@ function ExerciseGroup({
   color,
   items,
   onEdit,
+  cardStyle,
 }: {
   title: string
   color?: string
   items: Exercise[]
   onEdit: (e: Exercise) => void
+  cardStyle: CardStyle
 }) {
   if (items.length === 0) return null
   return (
@@ -108,8 +120,14 @@ function ExerciseGroup({
           <button
             key={e.id}
             onClick={() => onEdit(e)}
-            className="panel tap-scale flex items-center gap-3 rounded-xl px-4 py-3 text-left"
+            className={`panel tap-scale relative flex items-center gap-3 rounded-xl px-4 py-3 text-left ${
+              color && cardStyle === 'stripe' ? 'overflow-hidden' : ''
+            }`}
+            style={color && cardStyle === 'tint' ? { background: hexToRgba(color, 0.16) } : undefined}
           >
+            {color && cardStyle === 'stripe' && (
+              <span className="absolute inset-y-0 left-0 w-1.5" style={{ background: color }} />
+            )}
             {e.imagen ? (
               <img src={e.imagen} alt="" className="h-9 w-9 shrink-0 rounded-lg object-cover" />
             ) : (

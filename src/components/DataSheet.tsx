@@ -2,10 +2,15 @@ import { useRef, useState } from 'react'
 import { Download, RotateCcw, Upload } from 'lucide-react'
 import { Sheet } from './Sheet'
 import { useStore, getExportPayload } from '../store/useStore'
+import { categories, colorPalette } from '../data/categories'
 
 export function DataSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const importData = useStore((s) => s.importData)
   const resetToSeed = useStore((s) => s.resetToSeed)
+  const categoryColors = useStore((s) => s.categoryColors)
+  const setCategoryColor = useStore((s) => s.setCategoryColor)
+  const cardStyle = useStore((s) => s.cardStyle)
+  const setCardStyle = useStore((s) => s.setCardStyle)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [message, setMessage] = useState<string | null>(null)
 
@@ -46,6 +51,70 @@ export function DataSheet({ open, onClose }: { open: boolean; onClose: () => voi
   return (
     <Sheet open={open} title="Ajustes y datos" onClose={onClose}>
       <div className="flex flex-col gap-3 pb-2">
+        <div className="panel-2 rounded-xl p-3.5">
+          <p className="mb-2 text-sm font-bold text-ink-light">Estilo de tarjeta</p>
+          <p className="mb-2.5 text-xs text-dim">Cómo se marca el color de categoría en cada ejercicio.</p>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setCardStyle('stripe')}
+              className={`tap-scale flex-1 rounded-lg py-2.5 text-xs font-bold ${
+                cardStyle === 'stripe' ? 'accent-fill' : 'panel text-dim'
+              }`}
+            >
+              Franja lateral
+            </button>
+            <button
+              onClick={() => setCardStyle('tint')}
+              className={`tap-scale flex-1 rounded-lg py-2.5 text-xs font-bold ${
+                cardStyle === 'tint' ? 'accent-fill' : 'panel text-dim'
+              }`}
+            >
+              Fondo con tinte
+            </button>
+          </div>
+        </div>
+
+        <div className="panel-2 rounded-xl p-3.5">
+          <p className="mb-1 text-sm font-bold text-ink-light">Colores de categoría</p>
+          <p className="mb-3 text-xs text-dim">Tocá un color de la paleta, o el círculo grande para elegir cualquier otro.</p>
+          <div className="flex flex-col gap-3.5">
+            {categories.map((c) => (
+              <div key={c.id}>
+                <div className="mb-1.5 flex items-center justify-between">
+                  <span className="text-xs font-bold text-ink-light">{c.label}</span>
+                  <label className="tap-scale relative h-7 w-7 shrink-0 overflow-hidden rounded-full ring-1 ring-line">
+                    <span className="absolute inset-0" style={{ background: categoryColors[c.id] }} />
+                    <input
+                      type="color"
+                      value={categoryColors[c.id]}
+                      onChange={(e) => setCategoryColor(c.id, e.target.value)}
+                      className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                      aria-label={`Color personalizado para ${c.label}`}
+                    />
+                  </label>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {colorPalette.map((hex) => {
+                    const selected = categoryColors[c.id].toLowerCase() === hex.toLowerCase()
+                    return (
+                      <button
+                        key={hex}
+                        onClick={() => setCategoryColor(c.id, hex)}
+                        className="tap-scale h-6 w-6 shrink-0 rounded-full"
+                        style={{
+                          background: hex,
+                          boxShadow: selected ? `0 0 0 2px var(--color-panel-2), 0 0 0 3.5px ${hex}` : 'none',
+                        }}
+                        aria-label={hex}
+                      />
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <p className="text-sm text-dim">
           Todo se guarda en este dispositivo. Hacé una copia de seguridad para no perder tu rutina.
         </p>
