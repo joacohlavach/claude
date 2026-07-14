@@ -11,6 +11,12 @@ const defaultCategoryColors = Object.fromEntries(categories.map((c) => [c.id, c.
   string
 >
 
+interface DataSnapshot {
+  exercises: Exercise[]
+  days: RoutineDay[]
+  routineName: string
+}
+
 interface GymState {
   exercises: Exercise[]
   days: RoutineDay[]
@@ -19,6 +25,8 @@ interface GymState {
   categoryColors: Record<CategoryId, string>
   cardStyle: CardStyle
   lastBackupAt: string | null
+  dailySnapshot: (DataSnapshot & { date: string }) | null
+  preActionSnapshot: (DataSnapshot & { savedAt: string; reason: string }) | null
 
   setRoutineName: (name: string) => void
   toggleWeekDay: (index: number) => void
@@ -26,6 +34,9 @@ interface GymState {
   setCardStyle: (style: CardStyle) => void
   toggleExerciseCompleted: (dayId: string, entryId: string) => void
   markBackupDone: () => void
+  ensureDailySnapshot: () => void
+  restoreDailySnapshot: () => void
+  restorePreActionSnapshot: () => void
 
   addExercise: (
     nombre: string,
@@ -52,7 +63,7 @@ interface GymState {
 
 export const useStore = create<GymState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       exercises: seedExercises,
       days: seedDays,
       routineName: 'Plan 3 días',
@@ -60,10 +71,40 @@ export const useStore = create<GymState>()(
       categoryColors: defaultCategoryColors,
       cardStyle: 'stripe',
       lastBackupAt: null,
+      dailySnapshot: null,
+      preActionSnapshot: null,
 
       setRoutineName: (name) => set({ routineName: name }),
 
       markBackupDone: () => set({ lastBackupAt: new Date().toISOString() }),
+
+      ensureDailySnapshot: () =>
+        set((s) => {
+          const today = getTodayISO()
+          if (s.dailySnapshot?.date === today) return {}
+          return {
+            dailySnapshot: {
+              date: today,
+              exercises: s.exercises,
+              days: s.days,
+              routineName: s.routineName,
+            },
+          }
+        }),
+
+      restoreDailySnapshot: () =>
+        set((s) => {
+          if (!s.dailySnapshot) return {}
+          const { exercises, days, routineName } = s.dailySnapshot
+          return { exercises, days, routineName }
+        }),
+
+      restorePreActionSnapshot: () =>
+        set((s) => {
+          if (!s.preActionSnapshot) return {}
+          const { exercises, days, routineName } = s.preActionSnapshot
+          return { exercises, days, routineName }
+        }),
 
       toggleExerciseCompleted: (dayId, entryId) =>
         set((s) => {
@@ -212,14 +253,33 @@ export const useStore = create<GymState>()(
           }),
         })),
 
-      resetToSeed: () => set({ exercises: seedExercises, days: seedDays, routineName: 'Plan 3 días' }),
+      resetToSeed: () =>
+        set((s) => ({
+          preActionSnapshot: {
+            exercises: s.exercises,
+            days: s.days,
+            routineName: s.routineName,
+            savedAt: new Date().toISOString(),
+            reason: 'antes de restaurar el original',
+          },
+          exercises: seedExercises,
+          days: seedDays,
+          routineName: 'Plan 3 días',
+        })),
 
       importData: (payload) =>
-        set({
+        set((s) => ({
+          preActionSnapshot: {
+            exercises: s.exercises,
+            days: s.days,
+            routineName: s.routineName,
+            savedAt: new Date().toISOString(),
+            reason: 'antes de importar un backup',
+          },
           exercises: payload.exercises,
           days: payload.days,
-          routineName: payload.routineName ?? get().routineName,
-        }),
+          routineName: payload.routineName ?? s.routineName,
+        })),
     }),
     {
       name: 'gymapp-storage',
