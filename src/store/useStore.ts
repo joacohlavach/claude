@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid'
 import type { CardStyle, CategoryId, DayExerciseEntry, Exercise, RoutineDay, TrenBloque, WeekProgress } from '../types'
 import { seedDays, seedExercises } from '../data/seed'
 import { categories } from '../data/categories'
-import { getMondayISO } from '../lib/week'
+import { getMondayISO, getTodayISO } from '../lib/week'
 
 const defaultCategoryColors = Object.fromEntries(categories.map((c) => [c.id, c.color])) as Record<
   CategoryId,
@@ -18,11 +18,14 @@ interface GymState {
   weekProgress: WeekProgress
   categoryColors: Record<CategoryId, string>
   cardStyle: CardStyle
+  lastBackupAt: string | null
 
   setRoutineName: (name: string) => void
   toggleWeekDay: (index: number) => void
   setCategoryColor: (id: CategoryId, color: string) => void
   setCardStyle: (style: CardStyle) => void
+  toggleExerciseCompleted: (dayId: string, entryId: string) => void
+  markBackupDone: () => void
 
   addExercise: (
     nombre: string,
@@ -56,8 +59,30 @@ export const useStore = create<GymState>()(
       weekProgress: { weekStart: getMondayISO(new Date()), days: [false, false, false, false, false, false, false] },
       categoryColors: defaultCategoryColors,
       cardStyle: 'stripe',
+      lastBackupAt: null,
 
       setRoutineName: (name) => set({ routineName: name }),
+
+      markBackupDone: () => set({ lastBackupAt: new Date().toISOString() }),
+
+      toggleExerciseCompleted: (dayId, entryId) =>
+        set((s) => {
+          const today = getTodayISO()
+          return {
+            days: s.days.map((d) =>
+              d.id === dayId
+                ? {
+                    ...d,
+                    ejercicios: d.ejercicios.map((entry) =>
+                      entry.id === entryId
+                        ? { ...entry, completadoFecha: entry.completadoFecha === today ? null : today }
+                        : entry,
+                    ),
+                  }
+                : d,
+            ),
+          }
+        }),
 
       setCategoryColor: (id, color) =>
         set((s) => ({ categoryColors: { ...s.categoryColors, [id]: color } })),

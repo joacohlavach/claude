@@ -8,3 +8,9 @@ export function getMondayISO(d: Date): string {
 }
 
 export const WEEKDAY_LABELS = ['L', 'M', 'X', 'J', 'V', 'S', 'D']
+
+export function getTodayISO(): string {
+  const date = new Date()
+  date.setHours(0, 0, 0, 0)
+  return date.toISOString().slice(0, 10)
+}

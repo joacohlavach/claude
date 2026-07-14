@@ -4,6 +4,14 @@ import { Sheet } from './Sheet'
 import { useStore, getExportPayload } from '../store/useStore'
 import { categories, colorPalette } from '../data/categories'
 
+function formatBackupAge(iso: string | null): string {
+  if (!iso) return 'nunca hiciste una'
+  const days = Math.floor((Date.now() - new Date(iso).getTime()) / (1000 * 60 * 60 * 24))
+  if (days <= 0) return 'hoy'
+  if (days === 1) return 'ayer'
+  return `hace ${days} días`
+}
+
 export function DataSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const importData = useStore((s) => s.importData)
   const resetToSeed = useStore((s) => s.resetToSeed)
@@ -11,6 +19,8 @@ export function DataSheet({ open, onClose }: { open: boolean; onClose: () => voi
   const setCategoryColor = useStore((s) => s.setCategoryColor)
   const cardStyle = useStore((s) => s.cardStyle)
   const setCardStyle = useStore((s) => s.setCardStyle)
+  const lastBackupAt = useStore((s) => s.lastBackupAt)
+  const markBackupDone = useStore((s) => s.markBackupDone)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [message, setMessage] = useState<string | null>(null)
 
@@ -23,6 +33,7 @@ export function DataSheet({ open, onClose }: { open: boolean; onClose: () => voi
     a.download = `gymapp-backup-${new Date().toISOString().slice(0, 10)}.json`
     a.click()
     URL.revokeObjectURL(url)
+    markBackupDone()
   }
 
   const handleImportClick = () => fileInputRef.current?.click()
@@ -115,9 +126,13 @@ export function DataSheet({ open, onClose }: { open: boolean; onClose: () => voi
           </div>
         </div>
 
-        <p className="text-sm text-dim">
-          Todo se guarda en este dispositivo. Hacé una copia de seguridad para no perder tu rutina.
-        </p>
+        <div className="panel-2 rounded-xl p-3.5">
+          <p className="text-sm text-dim">
+            Todo se guarda solo en este dispositivo (no hay nube ni cuenta). El navegador puede llegar a borrarlo —
+            por ejemplo, si limpiás datos de navegación o pasan varios días sin abrir la app. Hacé backups seguido.
+          </p>
+          <p className="mt-2 font-mono text-xs text-orange-light">Último backup: {formatBackupAge(lastBackupAt)}</p>
+        </div>
 
         <button onClick={handleExport} className="panel-2 tap-scale flex items-center gap-3 rounded-xl px-4 py-3.5 text-left">
           <span className="accent-fill flex h-9 w-9 items-center justify-center rounded-full">

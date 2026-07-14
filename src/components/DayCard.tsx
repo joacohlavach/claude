@@ -1,8 +1,9 @@
 import { useState } from 'react'
+import { Reorder } from 'framer-motion'
 import { ChevronDown, ChevronUp, Pencil, Plus, Trash2 } from 'lucide-react'
-import { ExerciseRow } from './ExerciseRow'
+import { SortableExerciseRow } from './SortableExerciseRow'
 import { useStore } from '../store/useStore'
-import type { RoutineDay } from '../types'
+import type { DayExerciseEntry, RoutineDay } from '../types'
 
 export function DayCard({
   day,
@@ -18,7 +19,6 @@ export function DayCard({
   onAddExercise: () => void
 }) {
   const exercises = useStore((s) => s.exercises)
-  const categoryColors = useStore((s) => s.categoryColors)
   const renameDay = useStore((s) => s.renameDay)
   const deleteDay = useStore((s) => s.deleteDay)
   const reorderDayExercises = useStore((s) => s.reorderDayExercises)
@@ -34,13 +34,11 @@ export function DayCard({
     setEditingTitle(false)
   }
 
-  const moveExercise = (entryId: string, direction: 'up' | 'down') => {
-    const ids = sortedEntries.map((e) => e.id)
-    const idx = ids.indexOf(entryId)
-    const swapWith = direction === 'up' ? idx - 1 : idx + 1
-    if (swapWith < 0 || swapWith >= ids.length) return
-    ;[ids[idx], ids[swapWith]] = [ids[swapWith], ids[idx]]
-    reorderDayExercises(day.id, ids)
+  const handleReorder = (newOrder: DayExerciseEntry[]) => {
+    reorderDayExercises(
+      day.id,
+      newOrder.map((e) => e.id),
+    )
   }
 
   return (
@@ -93,28 +91,26 @@ export function DayCard({
         </div>
       </header>
 
-      <div className="rail flex flex-col gap-2">
-        {sortedEntries.map((entry, i) => {
-          const exercise = exerciseById.get(entry.exerciseId)
-          const dotColor = exercise?.categoria ? categoryColors[exercise.categoria] : '#4a4a4f'
-          return (
-            <div key={entry.id} className="relative">
-              <span className="rail-dot" style={{ top: 22, color: dotColor }} />
-              <ExerciseRow
-                entry={entry}
-                exercise={exercise}
-                dayId={day.id}
-                isFirst={i === 0}
-                isLast={i === sortedEntries.length - 1}
-                onMove={(dir) => moveExercise(entry.id, dir)}
-              />
-            </div>
-          )
-        })}
-        {sortedEntries.length === 0 && (
-          <p className="py-3 text-center text-xs text-dim">Todavía no hay ejercicios en este día.</p>
-        )}
-      </div>
+      {sortedEntries.length > 0 ? (
+        <Reorder.Group
+          as="div"
+          axis="y"
+          values={sortedEntries}
+          onReorder={handleReorder}
+          className="rail flex flex-col gap-2"
+        >
+          {sortedEntries.map((entry) => (
+            <SortableExerciseRow
+              key={entry.id}
+              entry={entry}
+              exercise={exerciseById.get(entry.exerciseId)}
+              dayId={day.id}
+            />
+          ))}
+        </Reorder.Group>
+      ) : (
+        <p className="py-3 text-center text-xs text-dim">Todavía no hay ejercicios en este día.</p>
+      )}
 
       <button
         onClick={onAddExercise}
