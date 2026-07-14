@@ -6,6 +6,7 @@ import { FloatingNav } from './components/FloatingNav'
 import { DataSheet } from './components/DataSheet'
 import { RoutineView } from './views/RoutineView'
 import { ExerciseLibraryView } from './views/ExerciseLibraryView'
+import { useStore } from './store/useStore'
 
 export type View = 'rutina' | 'ejercicios'
 
@@ -13,11 +14,16 @@ function App() {
   const [showSplash, setShowSplash] = useState(true)
   const [view, setView] = useState<View>('rutina')
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const ensureDailySnapshot = useStore((s) => s.ensureDailySnapshot)
 
   useEffect(() => {
     const t = setTimeout(() => setShowSplash(false), 1300)
     return () => clearTimeout(t)
   }, [])
+
+  useEffect(() => {
+    ensureDailySnapshot()
+  }, [ensureDailySnapshot])
 
   return (
     <>

@@ -1,8 +1,20 @@
 import { useRef, useState } from 'react'
-import { Download, RotateCcw, Upload } from 'lucide-react'
+import { Download, History, RotateCcw, Upload } from 'lucide-react'
 import { Sheet } from './Sheet'
 import { useStore, getExportPayload } from '../store/useStore'
 import { categories, colorPalette } from '../data/categories'
+
+function formatBackupAge(iso: string | null): string {
+  if (!iso) return 'nunca hiciste una'
+  const days = Math.floor((Date.now() - new Date(iso).getTime()) / (1000 * 60 * 60 * 24))
+  if (days <= 0) return 'hoy'
+  if (days === 1) return 'ayer'
+  return `hace ${days} días`
+}
+
+function formatDateTime(iso: string) {
+  return new Date(iso).toLocaleString('es-AR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
+}
 
 export function DataSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const importData = useStore((s) => s.importData)
@@ -11,8 +23,33 @@ export function DataSheet({ open, onClose }: { open: boolean; onClose: () => voi
   const setCategoryColor = useStore((s) => s.setCategoryColor)
   const cardStyle = useStore((s) => s.cardStyle)
   const setCardStyle = useStore((s) => s.setCardStyle)
+  const lastBackupAt = useStore((s) => s.lastBackupAt)
+  const markBackupDone = useStore((s) => s.markBackupDone)
+  const dailySnapshot = useStore((s) => s.dailySnapshot)
+  const preActionSnapshot = useStore((s) => s.preActionSnapshot)
+  const restoreDailySnapshot = useStore((s) => s.restoreDailySnapshot)
+  const restorePreActionSnapshot = useStore((s) => s.restorePreActionSnapshot)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [message, setMessage] = useState<string | null>(null)
+
+  const countOf = (s: { exercises: unknown[]; days: unknown[] }) =>
+    `${s.exercises.length} ejercicios · ${s.days.length} días`
+
+  const handleRestoreDaily = () => {
+    if (!dailySnapshot) return
+    if (confirm(`¿Restaurar cómo estaba la app hoy a la mañana (${countOf(dailySnapshot)})? Se pierde lo cambiado después.`)) {
+      restoreDailySnapshot()
+      setMessage('Se restauró la copia de esta mañana.')
+    }
+  }
+
+  const handleRestorePreAction = () => {
+    if (!preActionSnapshot) return
+    if (confirm(`¿Restaurar cómo estaba justo ${preActionSnapshot.reason} (${countOf(preActionSnapshot)})?`)) {
+      restorePreActionSnapshot()
+      setMessage('Se restauró la copia anterior.')
+    }
+  }
 
   const handleExport = () => {
     const payload = getExportPayload()
@@ -23,6 +60,7 @@ export function DataSheet({ open, onClose }: { open: boolean; onClose: () => voi
     a.download = `gymapp-backup-${new Date().toISOString().slice(0, 10)}.json`
     a.click()
     URL.revokeObjectURL(url)
+    markBackupDone()
   }
 
   const handleImportClick = () => fileInputRef.current?.click()
@@ -51,6 +89,48 @@ export function DataSheet({ open, onClose }: { open: boolean; onClose: () => voi
   return (
     <Sheet open={open} title="Ajustes y datos" onClose={onClose}>
       <div className="flex flex-col gap-3 pb-2">
+        {(dailySnapshot || preActionSnapshot) && (
+          <div className="panel-2 rounded-xl p-3.5">
+            <p className="mb-1 flex items-center gap-1.5 text-sm font-bold text-ink-light">
+              <History size={14} /> Recuperar una copia anterior
+            </p>
+            <p className="mb-3 text-xs text-dim">
+              Copias automáticas guardadas en este dispositivo. No protegen contra un borrado de datos de Safari,
+              solo contra un reseteo o importación por error.
+            </p>
+            <div className="flex flex-col gap-2">
+              {dailySnapshot && (
+                <button
+                  onClick={handleRestoreDaily}
+                  className="panel tap-scale flex items-center justify-between rounded-lg px-3.5 py-2.5 text-left"
+                >
+                  <span>
+                    <span className="block text-xs font-bold text-ink-light">Esta mañana ({dailySnapshot.date})</span>
+                    <span className="block font-mono text-[11px] text-dim">{countOf(dailySnapshot)}</span>
+                  </span>
+                  <span className="font-mono text-[11px] font-bold text-orange-light">Restaurar</span>
+                </button>
+              )}
+              {preActionSnapshot && (
+                <button
+                  onClick={handleRestorePreAction}
+                  className="panel tap-scale flex items-center justify-between rounded-lg px-3.5 py-2.5 text-left"
+                >
+                  <span>
+                    <span className="block text-xs font-bold text-ink-light">
+                      Justo {preActionSnapshot.reason}
+                    </span>
+                    <span className="block font-mono text-[11px] text-dim">
+                      {formatDateTime(preActionSnapshot.savedAt)} · {countOf(preActionSnapshot)}
+                    </span>
+                  </span>
+                  <span className="font-mono text-[11px] font-bold text-orange-light">Restaurar</span>
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
         <div className="panel-2 rounded-xl p-3.5">
           <p className="mb-2 text-sm font-bold text-ink-light">Estilo de tarjeta</p>
           <p className="mb-2.5 text-xs text-dim">Cómo se marca el color de categoría en cada ejercicio.</p>
@@ -115,9 +195,13 @@ export function DataSheet({ open, onClose }: { open: boolean; onClose: () => voi
           </div>
         </div>
 
-        <p className="text-sm text-dim">
-          Todo se guarda en este dispositivo. Hacé una copia de seguridad para no perder tu rutina.
-        </p>
+        <div className="panel-2 rounded-xl p-3.5">
+          <p className="text-sm text-dim">
+            Todo se guarda solo en este dispositivo (no hay nube ni cuenta). El navegador puede llegar a borrarlo —
+            por ejemplo, si limpiás datos de navegación o pasan varios días sin abrir la app. Hacé backups seguido.
+          </p>
+          <p className="mt-2 font-mono text-xs text-orange-light">Último backup: {formatBackupAge(lastBackupAt)}</p>
+        </div>
 
         <button onClick={handleExport} className="panel-2 tap-scale flex items-center gap-3 rounded-xl px-4 py-3.5 text-left">
           <span className="accent-fill flex h-9 w-9 items-center justify-center rounded-full">

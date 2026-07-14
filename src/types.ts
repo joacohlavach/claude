@@ -28,6 +28,7 @@ export interface DayExerciseEntry {
   reps: number | null
   peso: number | null
   notas: string
+  completadoFecha?: string | null
 }
 
 export interface RoutineDay {
