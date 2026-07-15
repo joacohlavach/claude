@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronDown, ImageIcon, Trash2 } from 'lucide-react'
+import { ChevronDown, GripVertical, ImageIcon, Trash2 } from 'lucide-react'
 import { NumberField } from './NumberField'
 import { ImageLightbox } from './ImageLightbox'
 import { useStore } from '../store/useStore'
@@ -12,10 +12,12 @@ export function ExerciseRow({
   entry,
   exercise,
   dayId,
+  onDragHandlePointerDown,
 }: {
   entry: DayExerciseEntry
   exercise: Exercise | undefined
   dayId: string
+  onDragHandlePointerDown: (e: React.PointerEvent) => void
 }) {
   const [expanded, setExpanded] = useState(false)
   const [lightboxOpen, setLightboxOpen] = useState(false)
@@ -74,6 +76,18 @@ export function ExerciseRow({
           </span>
           {summary && <span className="block font-mono text-[11px] text-dim">{summary}</span>}
         </span>
+        <button
+          onClick={(e) => e.stopPropagation()}
+          onPointerDown={(e) => {
+            e.stopPropagation()
+            onDragHandlePointerDown(e)
+          }}
+          aria-label="Mantener apretado para reordenar"
+          className="flex shrink-0 items-center justify-center rounded-md p-1 text-dim active:text-orange-light"
+          style={{ touchAction: 'none' }}
+        >
+          <GripVertical size={16} />
+        </button>
         <motion.span animate={{ rotate: expanded ? 180 : 0 }} className="shrink-0 text-dim">
           <ChevronDown size={16} />
         </motion.span>
