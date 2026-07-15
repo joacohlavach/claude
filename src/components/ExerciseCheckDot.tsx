@@ -1,10 +1,14 @@
 import { Check } from 'lucide-react'
+import { shouldSuppressClick } from '../lib/dragGuard'
 
 export function ExerciseCheckDot({ done, onToggle }: { done: boolean; onToggle: () => void }) {
   return (
     <button
       type="button"
-      onClick={onToggle}
+      onClick={() => {
+        if (shouldSuppressClick()) return
+        onToggle()
+      }}
       onPointerDown={(e) => e.stopPropagation()}
       className="rail-check tap-scale"
       style={{ background: done ? 'var(--color-green)' : 'var(--color-panel-2)' }}

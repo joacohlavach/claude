@@ -5,6 +5,7 @@ import { NumberField } from './NumberField'
 import { ImageLightbox } from './ImageLightbox'
 import { useStore } from '../store/useStore'
 import { hexToRgba } from '../lib/color'
+import { shouldSuppressClick } from '../lib/dragGuard'
 import type { DayExerciseEntry, Exercise } from '../types'
 
 export function ExerciseRow({
@@ -32,7 +33,10 @@ export function ExerciseRow({
     .filter(Boolean)
     .join(' · ')
 
-  const toggle = () => setExpanded((v) => !v)
+  const toggle = () => {
+    if (shouldSuppressClick()) return
+    setExpanded((v) => !v)
+  }
 
   const cardStyleProps =
     color && cardStyle === 'tint' ? { background: hexToRgba(color, 0.16) } : undefined
@@ -56,6 +60,7 @@ export function ExerciseRow({
           <button
             onClick={(e) => {
               e.stopPropagation()
+              if (shouldSuppressClick()) return
               setLightboxOpen(true)
             }}
             className="tap-scale shrink-0"
