@@ -42,6 +42,7 @@ export function SortableExerciseRow({
       onPointerLeave={clearPressTimer}
       whileDrag={{ scale: 1.03, zIndex: 20, boxShadow: '0 12px 28px rgba(0,0,0,0.5)' }}
       className="relative"
+      style={{ touchAction: 'none' }}
     >
       <ExerciseCheckDot done={done} onToggle={() => toggleExerciseCompleted(dayId, entry.id)} />
       <ExerciseRow entry={entry} exercise={exercise} dayId={dayId} />
