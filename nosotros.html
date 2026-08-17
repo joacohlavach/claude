@@ -116,59 +116,133 @@
       <div class="section-header">
         <span class="section-label">Estructura interna</span>
         <h2>Organigrama</h2>
-        <p>Greenpoint adopta una estructura funcional con cuatro áreas especializadas bajo una Dirección General.</p>
+        <p>Greenpoint adopta una estructura funcional con cinco áreas especializadas bajo una Dirección General.</p>
       </div>
 
       <div class="org-wrapper">
+
         <!-- Nivel 1: Dirección General -->
-        <div class="org-level org-top">
+        <div class="org-top-row">
           <div class="org-box org-box-main">
             <div class="org-box-icon">🏛️</div>
             <strong>Dirección General</strong>
-            <span>Coordinación estratégica, toma de decisiones y representación institucional de la ONG.</span>
           </div>
         </div>
 
-        <!-- Conector vertical -->
-        <div class="org-stem"></div>
+        <!-- Línea vertical desde Dirección General -->
+        <div class="org-v-line"></div>
 
-        <!-- Conector horizontal -->
-        <div class="org-h-bar"></div>
+        <!-- Línea horizontal que conecta los 5 hijos -->
+        <div class="org-h-line"></div>
 
-        <!-- Nivel 2: 4 áreas -->
-        <div class="org-level org-children-level">
-          <div class="org-child-wrap">
-            <div class="org-child-stem"></div>
+        <!-- Nivel 2: 5 áreas + sus subáreas -->
+        <div class="org-cols">
+
+          <!-- Tecnología -->
+          <div class="org-col">
+            <div class="org-v-line"></div>
             <div class="org-box org-box-area">
               <div class="org-box-icon" style="background:#dcfce7;">💻</div>
               <strong>Tecnología</strong>
-              <span>Desarrollo y mantenimiento de la plataforma web, base de datos de puntos verdes y actualizaciones del sistema.</span>
+            </div>
+            <div class="org-v-line org-v-short"></div>
+            <div class="org-h-line org-h-sub"></div>
+            <div class="org-subcols">
+              <div class="org-subcol">
+                <div class="org-v-line org-v-short"></div>
+                <div class="org-box org-box-sub">Plataforma Web</div>
+              </div>
+              <div class="org-subcol">
+                <div class="org-v-line org-v-short"></div>
+                <div class="org-box org-box-sub">Base de Datos</div>
+              </div>
             </div>
           </div>
-          <div class="org-child-wrap">
-            <div class="org-child-stem"></div>
+
+          <!-- Comunicación y Marketing -->
+          <div class="org-col">
+            <div class="org-v-line"></div>
             <div class="org-box org-box-area">
               <div class="org-box-icon" style="background:#dbeafe;">📣</div>
               <strong>Comunicación y Marketing</strong>
-              <span>Gestión de redes sociales, difusión comunitaria y campañas de concientización ambiental.</span>
+            </div>
+            <div class="org-v-line org-v-short"></div>
+            <div class="org-h-line org-h-sub"></div>
+            <div class="org-subcols">
+              <div class="org-subcol">
+                <div class="org-v-line org-v-short"></div>
+                <div class="org-box org-box-sub">Redes Sociales</div>
+              </div>
+              <div class="org-subcol">
+                <div class="org-v-line org-v-short"></div>
+                <div class="org-box org-box-sub">Campañas</div>
+              </div>
             </div>
           </div>
-          <div class="org-child-wrap">
-            <div class="org-child-stem"></div>
+
+          <!-- Operaciones -->
+          <div class="org-col">
+            <div class="org-v-line"></div>
             <div class="org-box org-box-area">
               <div class="org-box-icon" style="background:#fef9c3;">🗺️</div>
               <strong>Operaciones</strong>
-              <span>Relevamiento, verificación y actualización permanente de los puntos de reciclaje en toda Córdoba capital.</span>
+            </div>
+            <div class="org-v-line org-v-short"></div>
+            <div class="org-h-line org-h-sub"></div>
+            <div class="org-subcols">
+              <div class="org-subcol">
+                <div class="org-v-line org-v-short"></div>
+                <div class="org-box org-box-sub">Relevamiento</div>
+              </div>
+              <div class="org-subcol">
+                <div class="org-v-line org-v-short"></div>
+                <div class="org-box org-box-sub">Verificación</div>
+              </div>
             </div>
           </div>
-          <div class="org-child-wrap">
-            <div class="org-child-stem"></div>
+
+          <!-- Finanzas y Administración -->
+          <div class="org-col">
+            <div class="org-v-line"></div>
             <div class="org-box org-box-area">
               <div class="org-box-icon" style="background:#fce7f3;">💰</div>
               <strong>Finanzas y Administración</strong>
-              <span>Gestión de donaciones, recursos, relaciones con sponsors y administración general de la organización.</span>
+            </div>
+            <div class="org-v-line org-v-short"></div>
+            <div class="org-h-line org-h-sub"></div>
+            <div class="org-subcols">
+              <div class="org-subcol">
+                <div class="org-v-line org-v-short"></div>
+                <div class="org-box org-box-sub">Donaciones</div>
+              </div>
+              <div class="org-subcol">
+                <div class="org-v-line org-v-short"></div>
+                <div class="org-box org-box-sub">Adm. General</div>
+              </div>
             </div>
           </div>
+
+          <!-- RR.HH -->
+          <div class="org-col">
+            <div class="org-v-line"></div>
+            <div class="org-box org-box-area">
+              <div class="org-box-icon" style="background:#ede9fe;">👥</div>
+              <strong>RR.HH</strong>
+            </div>
+            <div class="org-v-line org-v-short"></div>
+            <div class="org-h-line org-h-sub"></div>
+            <div class="org-subcols">
+              <div class="org-subcol">
+                <div class="org-v-line org-v-short"></div>
+                <div class="org-box org-box-sub">Reclutamiento</div>
+              </div>
+              <div class="org-subcol">
+                <div class="org-v-line org-v-short"></div>
+                <div class="org-box org-box-sub">Capacitación</div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
